@@ -1,0 +1,2 @@
+[nxos]
+nxos ansible_host="changeme" ansible_user="changeme" ansible_ssh_pass="changeme" ansible_network_os=cisco.nxos.nxos

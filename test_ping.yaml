@@ -1,0 +1,26 @@
+---
+- hosts: nxos
+  connection: network_cli
+  gather_facts: no
+  vars:
+    ip_addresses:
+      - "10.0.1.1"
+      - "10.0.1.2"
+    vrf_and_vlan:
+      vlan101: VRF1
+      vlan102: VRF2
+
+  tasks:
+    - name: generate ping commands
+      set_fact:
+        ping_commands: "{{ ip_addresses|ping(vrf_and_vlan=vrf_and_vlan) }}"
+
+    - name: print commands
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ ping_commands }}"
+
+    - name: run ping command
+      cli_command:
+        command: "{{ item }}"
+      loop: "{{ ping_commands }}"
